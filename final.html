@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindi Tuition - Chennai</title>
+  <style>
+    :root {
+      --bg: #0b1021;
+      --card: #111632;
+      --muted: #8ea0b6;
+      --brand: #46c2b1;
+      --brand-2: #6ae3d5;
+      --text: #e9eef6;
+      --accent: #ffd166;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+      background: radial-gradient(circle at top, var(--bg), #050811);
+      color: var(--text);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    .container { max-width: 1100px; margin: auto; padding: 2rem; }
+    h2 { margin: 1.5rem 0 1rem; }
+
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: rgba(11,16,33,.8);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .title { font-weight: bold; font-size: 1.2rem; }
+
+    .logo-wrap {
+      display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; overflow: hidden;
+      background: #0d1330; border: 1px solid rgba(255,255,255,.08);
+    }
+    .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logo-svg { display: none; width: 44px; height: 44px; }
+
+    .cta {
+      background: linear-gradient(45deg, var(--brand), var(--brand-2));
+      border: none; color: white; padding: 0.7rem 1.5rem;
+      border-radius: 999px; font-weight: bold; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s; display: inline-block;
+    }
+    .cta:hover { transform: scale(1.08); box-shadow: 0 0 15px var(--brand-2); }
+
+    .hero { text-align: center; margin: 2rem auto; }
+    .hero h1 { font-size: clamp(28px, 5vw, 46px); margin-bottom: 1rem; }
+    .typing { font-size: 1.2rem; font-weight: bold; color: var(--accent); min-height: 30px; }
+
+    .card { background: var(--card); border-radius: 16px; padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4); transition: transform 0.3s, box-shadow 0.3s;
+      transform-origin: center; overflow: visible; position: relative; }
+    .card:hover, .card:focus-within { transform: scale(1.04); box-shadow: 0 18px 40px rgba(70,194,177,0.15); z-index: 5; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+    .price .num { font-size: 1.6rem; font-weight: bold; color: var(--accent); }
+
+    .img-box img { max-width: 100%; border-radius: 12px; transition: transform 0.4s ease; }
+    .img-box img:hover { transform: scale(1.08); }
+
+    #faq .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    .faq-item { border: 1px solid rgba(255,255,255,.08); background: #0f1430; border-radius: 14px; padding: 16px; }
+    details { cursor: pointer; }
+    summary { list-style: none; font-weight: 600; display:flex; justify-content:space-between; align-items:center; }
+    summary::-webkit-details-marker { display: none; }
+    .arrow { transition: transform 180ms ease; }
+    details[open] .arrow { transform: rotate(90deg); }
+    details[open] .answer { margin-top: .5rem; color: var(--muted); }
+
+    footer { border-top: 1px solid rgba(255,255,255,.1); text-align: center; padding: 1rem; font-size: 0.9rem; color: var(--muted); margin-top: 3rem; }
+
+    /* Contact form grid */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    form input, form textarea {
+      width: 100%; padding: 12px 14px; border-radius: 12px; background: #0b112b;
+      border: 1px solid rgba(255,255,255,.12); color: var(--text); margin-bottom: 0.5rem;
+    }
+    form button { margin-top: 8px; }
+    .note { font-size: 13px; color: var(--muted); margin-top: 0.5rem; }
+    @media(max-width:768px){ .contact-grid{ grid-template-columns: 1fr; } }
+
+    /* Shining Heading Effect */
+    .shining {
+      font-weight: bold; font-size: 1.3rem; color: #fff;
+      text-shadow: 0 0 6px #fff, 0 0 12px #46c2b1, 0 0 22px #6ae3d5, 0 0 42px #46c2b1;
+      transition: all 0.3s ease-in-out;
+    }
+    .shining:hover {
+      color: #fff; text-shadow: 0 0 12px #fff, 0 0 24px #ffd166, 0 0 36px #46c2b1, 0 0 64px #6ae3d5;
+      transform: scale(1.05);
+    }
+
+    /* About Us text styling */
+    .about-text { font-weight: bold; font-size: 18px; color: #fff; line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <!-- Logo: auto-switch to SVG (Hindi word) via JS, with image fallback -->
+      <div class="logo-wrap" id="logoWrap">
+        <img id="logoImg" src="assets/images/logo.jpg" alt="Hindi Tuition Logo" loading="eager" />
+        <!-- Inline SVG hidden by default; JS will show it if image not found or always if preferred -->
+        <svg class="logo-svg" id="logoSVG" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Hindi Logo">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#46c2b1"/>
+              <stop offset="1" stop-color="#6ae3d5"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="120" height="120" rx="16" fill="#0b112b"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#g)" stroke-width="6"/>
+          <!-- Devanagari: ????? (Hindi) stylized -->
+          <text x="50%" y="58%" text-anchor="middle" fill="#ffd166" font-size="40" font-family="'Noto Sans Devanagari', Arial, sans-serif">???</text>
+        </svg>
+      </div>
+      <div class="title">Hindi Tuition - Chennai</div>
+    </div>
+    <a class="cta" href="#contact">Contact Now</a>
+  </header>
+
+  <section class="hero container">
+    <h1>Central Govt. Certified & Licensed Institute</h1>
+    <h3><b>No:5, Ekambaram Street, Mohalingam Nagar, Kundrathur, Chennai-600069</b></h3>
+    <h2><b>Mode: Online / Offline</b></h2>
+    <p class="typing" id="typing">Learn Hindi with Confidence!</p>
+    <p style="margin-top:16px">
+      <a class="cta" href="#contact">Book Free Demo</a>
+    </p>
+  </section>
+
+  <!-- ABOUT US SECTION -->
+  <section class="container">
+    <h2>About Us</h2>
+    <div class="card">
+      <p class="about-text">
+        We are experienced Hindi tutors based in Kundrathur, Chennai. Our mission is to make Hindi learning simple and effective for school students, college students, and professionals.
+        With 10+ years of teaching experience, we focus on personalized attention, small batch sizes, and flexible learning methods to help students achieve fluency in Hindi.
+        Whether you need spoken Hindi, school support, or Prachar Sabha exam training, we are here to guide you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="container">
+    <h2>Courses & Fees</h2>
+    <div class="grid-3">
+      <div class="card price"><p>Parichaya<br /><span class="num">Rs. 400</span></p></div>
+      <div class="card price"><p>Prathmic<br /><span class="num">Rs. 450</span></p></div>
+      <div class="card price"><p>Madhyama<br /><span class="num">Rs. 500</span></p></div>
+      <div class="card price"><p>Rashtrabasha<br /><span class="num">Rs. 550</span></p></div>
+      <div class="card price"><p>Praveshika<br /><span class="num">Rs. 600</span></p></div>
+      <div class="card price"><p>Visharad Poorvardh<br /><span class="num">Rs. 650</span></p></div>
+      <div class="card price"><p>Visharad Uttarardh<br /><span class="num">Rs. 700</span></p></div>
+      <div class="card price"><p>Praveen Poorvardh<br /><span class="num">Rs. 750</span></p></div>
+      <div class="card price"><p>Praveen Uttarardh<br /><span class="num">Rs. 800</span></p></div>
+    </div>
+    <div class="card"><b>Highlight:</b> Affordable Fee! Hindi Tuition for All Levels</div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container" id="faq">
+    <h2>FAQ - Frequently Asked Questions</h2>
+    <div class="grid">
+      <div class="card faq-item">
+        <details>
+          <summary>Do you conduct online classes? <span class="arrow">?</span></summary>
+          <div class="answer">Yes, we offer both online and offline classes depending on your convenience.</div>
+        </details>
+      </div>
+      <div class="card faq-item">
+        <details>
+          <summary>How can I contact the tutor for doubts after class? <span class="arrow">?</span></summary>
+          <div class="answer">You can reach us via WhatsApp, email, or through the student portal for quick doubt-clarification.</div>
+        </details>
+      </div>
+      <div class="card faq-item">
+        <details>
+          <summary>Is there any certificate given after the course? <span class="arrow">?</span></summary>
+          <div class="answer">Yes. For Prachar Sabha exams & certain levels, students get official certificates. For general courses, we provide a completion certificate.</div>
+        </details>
+      </div>
+      <div class="card faq-item">
+        <details>
+          <summary>What are the class timings and batch sizes? <span class="arrow">?</span></summary>
+          <div class="answer">Weekday and weekend batches available. Small batches (5-8 students) for better attention; one-to-one also available.</div>
+        </details>
+      </div>
+      <div class="card faq-item">
+        <details>
+          <summary>Do you offer a demo class? <span class="arrow">?</span></summary>
+          <div class="answer">Yes, a short demo class is available on request. Contact us to schedule.</div>
+        </details>
+      </div>
+      <div class="card faq-item">
+        <details>
+          <summary>What is the fee payment method? <span class="arrow">?</span></summary>
+          <div class="answer">UPI, bank transfer, and cash accepted. Monthly/level-wise plans available.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="container">
+    <h2 class="shining">Why Us?</h2>
+    <div class="card">
+      <ul style="list-style: none; padding-left: 0;">
+        <li><b>Experienced tutors</b> with 10+ years teaching</li>
+        <li><b>Central Govt. Certified</b> & Licensed</li>
+        <li><b>Online + Offline</b> flexible batches</li>
+        <li><b>Small batch sizes</b> & personal attention</li>
+        <li><b>Affordable fees</b> for all levels</li>
+        <li><b>Prachar Sabha</b> exam coaching + certificates</li>
+        <li><b>Free demo class</b> available</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CERTIFICATION -->
+  <section class="container">
+    <h2>Certification & License</h2>
+    <div class="card">
+      <p><b>— Central Government Certified</b><br />
+      <b>— Licensed Institute (License No: XXXXXXX)</b></p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="container" id="contact">
+    <h2>Book Your Free Demo</h2>
+    <div class="card">
+      <div class="contact-grid">
+        <!-- Contact Form -->
+        <form action="#" method="post" onsubmit="event.preventDefault(); alert('Thanks! We will call you soon.');">
+          <input name="name" placeholder="Your Name" required />
+          <input name="phone" placeholder="Phone / WhatsApp" required />
+          <input name="city" placeholder="City / Area" />
+          <textarea name="message" placeholder="Class & preferred time" rows="4"></textarea>
+          <button class="cta" type="submit">Request Callback</button>
+          <div class="note">Or WhatsApp us: <a href="https://wa.me/919710672610" target="_blank" rel="noopener">+91 9710672610</a></div>
+        </form>
+
+        <!-- Contact Information -->
+        <div>
+          <h3>Contact & Location</h3>
+          <p>
+            <b>Address:</b> No:5, Ekambaram Street, Mohalingam Nagar, Kundrathur, Chennai-600069<br/>
+            <b>Email:</b> madhumithamadhu087@gmail.com<br/>
+            <b>Phone/WhatsApp:</b> +91 9710672610
+          </p>
+          <!-- Google Map Embed -->
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3896.7843251381956!2d80.0821!3d13.0109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5261e74b98c2ef%3A0xb6b3b7!2sKundrathur%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1692345667890!5m2!1sen!2sin"
+            width="100%" height="250" style="border:0; border-radius:12px; margin-top:10px;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Hindi Tuition - Chennai. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // --- Typing Effect ---
+    (function typingEffect(){
+      const el = document.getElementById('typing');
+      const msgs = [
+        'Learn Hindi with Confidence!',
+        'Prachar Sabha Exam Coaching!',
+        'One-to-One | Online & Offline',
+        'Free Demo – Book Now!'
+      ];
+      let i = 0, j = 0, deleting = false;
+      function tick(){
+        const msg = msgs[i];
+        if(!deleting){
+          el.textContent = msg.slice(0, ++j);
+          if(j === msg.length){ deleting = true; setTimeout(tick, 1100); return; }
+        } else {
+          el.textContent = msg.slice(0, --j);
+          if(j === 0){ deleting = false; i = (i+1) % msgs.length; }
+        }
+        setTimeout(tick, deleting ? 35 : 55);
+      }
+      tick();
+    })();
+
+    // --- Smart Hindi Logo Handling ---
+    (function setupLogo(){
+      const img = document.getElementById('logoImg');
+      const svg = document.getElementById('logoSVG');
+
+      // If image fails to load, show SVG (Hindi devanagari logo)
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+        svg.style.display = 'block';
+      });
+
+      // Optional: If you ALWAYS want the SVG Hindi logo, uncomment below
+      // img.style.display = 'none';
+      // svg.style.display = 'block';
+    })();
+  </script>
+</body>
+</html>
